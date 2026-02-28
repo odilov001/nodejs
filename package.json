@@ -1,0 +1,19 @@
+{
+	"name": "NODE JS",
+	"version": "1.0.0",
+	"description": "Nodejs darsliklar",
+	"license": "MIT",
+	"author": "Jahongir",
+	"type": "commonjs",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.14"
+	},
+	"dependencies": {
+		"uui": "^1.0.7"
+	}
+}
