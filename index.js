@@ -1,9 +1,23 @@
-// global import
-const obj = require("./main");
-// console.log(obj.plus(12, 34));
-// const user = new obj.User("Jahongir", 21);
-const user = new obj.User("Ali", 14);
-// console.log(user);
+const memory = require("os");
+const folder = require("fs");
 
-// console.log(__dirname);
-// console.log(__filename);
+const EventEmitter = require("events");
+class MyEmitter extends EventEmitter {}
+const emitter = new MyEmitter();
+
+emitter.on("message", (arg) => {
+	console.log("Event Listener.....", arg);
+});
+emitter.emit("message", { id: 1, url: "https://google.com" });
+
+// console.log(memory.freemem()); //71581696 BIT
+// console.log(memory.platform());
+// console.log(memory.totalmem()); //8589934592 BIT
+
+// folder.readFile("index.js", (err, file) => {
+// 	if (err) {
+// 		console.log(err);
+// 	} else {
+// 		console.log(file);
+// 	}
+// });

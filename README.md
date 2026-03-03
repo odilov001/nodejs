@@ -1,28 +1,26 @@
-npm init
+Modullar
+| Modul | Nima uchun kerak |
+| ------ | ------------------------------- |
+| path | Fayl yo‘lini xavfsiz boshqarish |
+| os |z Server ma’lumotlari |
+| fs | Fayl bilan ishlash |
+| event | malumotlar kirdi chiqdi va o'zgarishlarni xabardor qilib turadi
 
-install nodemon => bu saytni yaratib bo'lingandan keyin ishlatiladigan run uchun qo'llaniladi -D qilish kerak
-install uui paket => bu ID generatsiya qiladigan paket
-module.exports = object yozish kerak bu globalniy tarzda export qilish degani
+require('os')
+.freemem() // bosh xotira kompyuterdagi
+.useInfo() // Foynadlanuvchi
+.platform() //qaysi platformada
+.totalmem()// qancha ram bor
+require('fs')
+fs.readFile('.index.js', fn(err,file){})
+.writefile
+.rename homework
+.unlink
 
-buni fileda import qilish uchun
+const EventEmitter =require('event')
+const emitter = new EventEmitter()
+emitter.emit('message',{id, url})// bu biron bir narsani chiqarish va tarqatish yoki xabardor qilish degani
 
-biron bir o'zgaruvchi va
-required('')
-users papkasini ichida class yaratib olsa hambo'ladi
-
-**dirname
-**filename
-modules papka ochish kerak
-path.js ochish kerak
-pathni import qilish uchun required('path')
-bu esa Basename methodi hisoblanadi(file nomini chiqarib beradi)
-clg(path.basename(\_\_filename))
-papka nomini qaytarish uchun
-path.dirname(\_\_filename)
-//extname yani turgan papkani nomini chiqarib berad
-clg(path.extname(\_\_filename))
-agar malumotlarni object sifatida chiqarmoqchi bo'lsam
-o'zgaruvchi va path.parse(\_\_filename)
-.join() bu methodi shunga kiritilgan filegahca bo'lgan yo'lni ko'rsatib beradi
-yani
-join(\_\_dirname, 'database','mongodb', 'db.js')
+emitter.on('message', (arg)=>{
+clg('Listening.....')
+})
