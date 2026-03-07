@@ -1,26 +1,47 @@
-Modullar
-| Modul | Nima uchun kerak |
-| ------ | ------------------------------- |
-| path | Fayl yo‘lini xavfsiz boshqarish |
-| os |z Server ma’lumotlari |
-| fs | Fayl bilan ishlash |
-| event | malumotlar kirdi chiqdi va o'zgarishlarni xabardor qilib turadi
+res.write() → javob yozadi
+res.end() → javobni tugatadi
 
-require('os')
-.freemem() // bosh xotira kompyuterdagi
-.useInfo() // Foynadlanuvchi
-.platform() //qaysi platformada
-.totalmem()// qancha ram bor
-require('fs')
-fs.readFile('.index.js', fn(err,file){})
-.writefile
-.rename homework
-.unlink
+const http = require("http");
 
-const EventEmitter =require('event')
-const emitter = new EventEmitter()
-emitter.emit('message',{id, url})// bu biron bir narsani chiqarish va tarqatish yoki xabardor qilish degani
+const server = http.createServer((req, res) => {
+res.end("Hello World");
+});
 
-emitter.on('message', (arg)=>{
-clg('Listening.....')
+server.listen(3000);
+
+const http = require("http");
+
+const server = http.createServer((req,res)=>{
+
+if(req.url === "/"){
+res.end("Home Page")
+}
+
+else if(req.url === "/about"){
+res.end("About Page")
+}
+
+else{
+res.end("Page not found")
+}
+
 })
+
+server.listen(3000)
+
+const http = require("http");
+
+const users = [
+{ id:1, name:"Ali"},
+{ id:2, name:"Vali"}
+]
+
+const server = http.createServer((req,res)=>{
+
+res.setHeader("Content-Type","application/json")
+
+res.end(JSON.stringify(users))
+
+})
+
+server.listen(3000)

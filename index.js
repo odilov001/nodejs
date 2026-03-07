@@ -1,23 +1,22 @@
-const memory = require("os");
-const folder = require("fs");
+const http = require("http");
 
-const EventEmitter = require("events");
-class MyEmitter extends EventEmitter {}
-const emitter = new MyEmitter();
-
-emitter.on("message", (arg) => {
-	console.log("Event Listener.....", arg);
+const users = [
+	{ id: 1, name: "Ali" },
+	{ id: 2, name: "Vali" },
+];
+const server = http.createServer((req, res) => {
+	if (req.url === "/") {
+		res.write("Hello from the home page ");
+		res.end();
+	} else if (req.url === "/users") {
+		res.setHeader("Content-Type", "application/json");
+		res.write(JSON.stringify(users));
+		res.end();
+	}
 });
-emitter.emit("message", { id: 1, url: "https://google.com" });
+// server.listen(port,callback function);
 
-// console.log(memory.freemem()); //71581696 BIT
-// console.log(memory.platform());
-// console.log(memory.totalmem()); //8589934592 BIT
-
-// folder.readFile("index.js", (err, file) => {
-// 	if (err) {
-// 		console.log(err);
-// 	} else {
-// 		console.log(file);
-// 	}
-// });
+const PORT = 3000;
+server.listen(PORT, () => {
+	console.log(`Server running on port ${PORT}`);
+});
