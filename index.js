@@ -1,22 +1,29 @@
-const http = require("http");
-
-const users = [
-	{ id: 1, name: "Ali" },
-	{ id: 2, name: "Vali" },
-];
-const server = http.createServer((req, res) => {
-	if (req.url === "/") {
-		res.write("Hello from the home page ");
-		res.end();
-	} else if (req.url === "/users") {
-		res.setHeader("Content-Type", "application/json");
-		res.write(JSON.stringify(users));
-		res.end();
-	}
-});
-// server.listen(port,callback function);
-
+const express = require("express");
+const { v4: uuidv4 } = require("uuid");
+const app = express();
 const PORT = 3000;
-server.listen(PORT, () => {
+
+const users = [];
+app.use(express.json());
+app.get("/", (req, res) => {
+	res.send("Hello from the home page");
+});
+
+app.get("/users", (req, res) => {
+	res.json(users);
+	res.send(users);
+});
+app.post("/users", (req, res) => {
+	const user = {
+		id: uuidv4(),
+		first_name: req.body.first_name,
+		last_name: req.body.last_name,
+	};
+	users.push(user);
+	res.json(user);
+	res.send(user);
+});
+
+app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 });
