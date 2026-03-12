@@ -1,26 +1,51 @@
-Modullar
-| Modul | Nima uchun kerak |
-| ------ | ------------------------------- |
-| path | Fayl yo‘lini xavfsiz boshqarish |
-| os |z Server ma’lumotlari |
-| fs | Fayl bilan ishlash |
-| event | malumotlar kirdi chiqdi va o'zgarishlarni xabardor qilib turadi
+│
+├── controllers
+│ └── usersController.js exports.getUsers barcha so'rovlar yoziladi export bilan
+│
+├── routes
+│ └── usersRoutes.js. const router = require("express").Router();
 
-require('os')
-.freemem() // bosh xotira kompyuterdagi
-.useInfo() // Foynadlanuvchi
-.platform() //qaysi platformada
-.totalmem()// qancha ram bor
-require('fs')
-fs.readFile('.index.js', fn(err,file){})
-.writefile
-.rename homework
-.unlink
+                                 const {
+                                   getUsers,
+                                   getSingleUser,
+                                   createUser,
+                                   deleteUser,
+                                 } = require("../controllers/usersController");
 
-const EventEmitter =require('event')
-const emitter = new EventEmitter()
-emitter.emit('message',{id, url})// bu biron bir narsani chiqarish va tarqatish yoki xabardor qilish degani
+                                 router.get("/", getUsers);
+                                 router.get("/:id", getSingleUser);
+                                 router.post("/", createUser);
+                                 router.delete("/:id", deleteUser);
 
-emitter.on('message', (arg)=>{
-clg('Listening.....')
-})
+module.exports = router;
+│
+├── middleware
+│ └── logger.js
+│
+├── data
+│ └── users.js. data qilish kerak userlarni object va export
+│
+├── app.js.
+const express = require("express");
+const app = express();
+
+const logger = require("./middleware/logger");
+const usersRoutes = require("./routes/usersRoutes");
+
+app.use(express.json());
+
+/\*_ middleware _/
+app.use(logger);
+
+/\*_ routes _/
+app.use("/users", usersRoutes);
+
+app.listen(3000, () => {
+console.log("Server running on port 3000");
+});
+
+Bu middleware serverga kelayotgan har bir request haqida ma’lumotni konsolga chiqarish uchun ishlatiladi. Backendda bu juda foydali, chunki serverga kim, qaysi URL orqali, qanday metod bilan murojaat qilganini ko‘rish mumkin.
+next() — requestni keyingi middleware yoki route ga yuboradi.
+Agar next() yozilmasa
+ request shu joyda to‘xtab qoladi
+ browser javob olmaydi

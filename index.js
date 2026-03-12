@@ -1,87 +1,110 @@
-/**Import modules */
+/** Import modules */
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
+
 const app = express();
+let count = 0;
 
-/**Variables */
+/** Middleware */
+app.use(express.json());
 
+/** Data */
 let users = [
 	{
-		id: 1,
-		firs_name: "Temurbek",
+		id: uuidv4(),
+		first_name: "Temurbek",
 		last_name: "To'xtasinov",
 		age: 20,
 		job: "frontend",
 	},
 	{
-		id: 2,
-		firs_name: "Jahongir",
+		id: uuidv4(),
+		first_name: "Jahongir",
 		last_name: "To'xtasinov",
 		age: 20,
 		job: "pupil",
 	},
 	{
-		id: 3,
-		firs_name: "Ali",
+		id: uuidv4(),
+		first_name: "Ali",
 		last_name: "To'xtasinov",
 		age: 22,
 		job: "teacher",
 	},
-	{
-		id: 4,
-		firs_name: "Vali",
-		last_name: "To'xtasinov",
-		age: 20,
-		job: "cook",
-	},
-	{
-		id: 5,
-		firs_name: "Alisher",
-		last_name: "To'xtasinov",
-		age: 20,
-		job: "cook",
-	},
 ];
-let id = 1;
 
-/** Request and Response Methods */
-
-app.use(express.json());
-
-/** FILTER  USERS */
-app.get("/users/query", (req, res) => {
-	const filteredUsers = users.filter((user) => user.job === req.query.job);
-	res.send(filteredUsers);
-});
 /** GET ALL USERS */
-
 app.get("/users", (req, res) => {
-	res.send(users);
+	res.json(users);
 });
 
-/** POST NEW USER */
+/** FILTER USERS  */
+app.get("/users/query", (req, res) => {
+	const { job } = req.query;
 
-app.post("/users", (req, res) => {
-	const user = { id: id++, firs_name: req.body.firs_name, last_name: req.body.last_name, age: req.body.age, job: req.body.job };
-	users.push(user);
-	res.status(201).send(user);
+	// if (job === undefined) {
+	// 	return res.status(400).json({ message: "Job is required" });
+	// }
+	const filteredUsers = users.filter((user) => user.job === job);
+
+	res.json(filteredUsers);
 });
 
 /** GET SINGLE USER */
-// app.get("/users/:id", (req, res) => {
-// 	const user = users.find((user) => user.id === parseInt(req.params.id));
+app.get("/users/:id", (req, res) => {
+	const user = users.find((user) => user.id === req.params.id);
 
-// 	if (user) {
-// 		res.send(user);
-// 	} else {
-// 		res.status(404).json({ message: "Foydalanuvchi topilmadi" });
-// 	}
-// });
+	if (!user) {
+		return res.status(404).json({ message: "User not found" });
+	}
 
-/** DELETE SINGLE USER */
+	res.json(user);
+});
 
-/** EDIT SINGLE USER */
+/** CREATE USER */
+app.post("/users", (req, res) => {
+	const newUser = {
+		id: uuidv4(),
+		first_name: req.body.first_name,
+		last_name: req.body.last_name,
+		age: req.body.age,
+		job: req.body.job,
+	};
 
-/** LISTEN PORT */
+	users.push(newUser);
 
-app.listen(3000, () => console.log("Server is running"));
+	res.status(201).json(newUser);
+});
+
+/** UPDATE USER */
+app.put("/users/:id", (req, res) => {
+	const user = users.find((user) => user.id === req.params.id);
+
+	if (!user) {
+		return res.status(404).json({ message: "User not found" });
+	}
+
+	user.first_name = req.body.first_name;
+	user.last_name = req.body.last_name;
+	user.age = req.body.age;
+	user.job = req.body.job;
+
+	res.status(200).json(user);
+});
+
+/** DELETE USER */
+app.delete("/users/:id", (req, res) => {
+	const user = users.find((user) => user.id === req.params.id);
+
+	if (!user) {
+		return res.status(404).json({ message: "User not found" });
+	}
+
+	users = users.filter((user) => user.id !== req.params.id);
+	res.json({ message: "User deleted" });
+});
+
+/** SERVER */
+app.listen(3000, () => {
+	console.log("Server running on port 3000");
+});
