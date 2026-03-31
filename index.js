@@ -1,15 +1,22 @@
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
 
-// const logger = require("./middleware/logger");
-const usersRoutes = require("./routes/usersRoutes");
-
+/** DB */
+const connectDB = require("./config/db");
+connectDB();
+/** MIDDLEWARE */
+app.use(cors());
 app.use(express.json());
 
-// app.use(logger);
+/** ROUTES */
+const usersRoutes = require("./routes/usersRoutes");
+app.use("/auth", usersRoutes);
 
-app.use("/users", usersRoutes);
+/** SERVER */
+const PORT = 4000;
 
-app.listen(3000, () => {
-	console.log("Server running on port 3000");
+app.listen(PORT, () => {
+	console.log(`Server running on port ${PORT}`);
 });
