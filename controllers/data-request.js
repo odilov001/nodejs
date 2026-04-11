@@ -1,27 +1,30 @@
-const Chat = require("../models/chat.models");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { io } = require("../index");
+const Users = require("../models/user.models");
+const client = require("../config/redis");
 
 /** READ */
-exports.getChat = async (req, res) => {
+
+exports.getUsers = async (req, res) => {
 	try {
-		const chat = await Chat.find();
-		res.status(200).json(chat);
+		await client.set("users", JSON.stringify([]));
+		const cache = await client.get("users");
+
+		if (cache) {
+			res.status(200).json(JSON.parse(cache));
+		} else {
+			const users = await Users.find();
+			await client.set("users", JSON.stringify(users));
+			res.status(200).json(users);
+		}
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
 };
+
 /** CREATE */
-exports.createChat = async (req, res) => {
+exports.createUser = async (req, res) => {
 	try {
-		const { msg } = req.body;
-		const newChat = new Chat({ msg });
-		await newChat.save();
-
-		io.emit("newChat", newChat);
-
-		res.status(201).json(newChat);
+		const user = await Users.create(req.body);
+		res.status(201).json(user);
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}

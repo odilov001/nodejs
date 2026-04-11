@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { createChat } = require("../controllers/data-request");
+const { createUser, getUsers } = require("../controllers/data-request");
 
-router.post("/chat", createChat);
+router.post("/create", createUser);
+router.get("/get", getUsers);
 
 module.exports = router;
