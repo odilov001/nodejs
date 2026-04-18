@@ -1,23 +1,31 @@
 const dotenv = require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
-const bot = new TelegramBot(process.env., { polling: true });
+const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
+const messageHandler = require("./handlers/message");
+const photoHandler = require("./handlers/photo");
+const commandHandler = require("./handlers/command");
 
-bot.onText("/help", (msg) => {
-	const chatId = msg.chat.id;
-	bot.sendMessage(chatId, "Qanday yordam kerak?");
+messageHandler(bot);
+photoHandler(bot);
+commandHandler(bot);
+
+bot.onText(/rasm/i, (msg) => {
+	try {
+		bot.sendPhoto(msg.chat.id, {
+			source: process.env.photo,
+		});
+	} catch (err) {
+		console.error(err);
+	}
 });
 
-bot.onText("/start", (msg) => {
-	const chatId = msg.chat.id;
-	bot.sendMessage(chatId, "Assalomu alaykum");
+bot.onText(/btn/i, (msg) => {
+	bot.sendMessage(msg.chat.id, "Bosing", {
+		reply_markup: {
+			inline_keyboard: [[{ text: "Bosing", callback_data: "click" }]],
+		},
+	});
 });
-bot.on("message", (msg) => {
-	if (msg.text === "salom") {
-		const chatId = msg.chat.id;
-		bot.sendMessage(chatId, "Assalomu alaykum, botga hush kelibsiz");
-	}
-	if (msg.text === "hello") {
-		const chatId = msg.chat.id;
-		bot.sendMessage(chatId, "Welcome to my bot");
-	}
+bot.on("callback_query", (query) => {
+	bot.sendMessage(query.message.chat.id, "Button bosildi");
 });
