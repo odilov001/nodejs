@@ -1,27 +1,23 @@
-const { Server } = require("socket.io");
+const dotenv = require("dotenv").config();
+const TelegramBot = require("node-telegram-bot-api");
+const bot = new TelegramBot(process.env., { polling: true });
 
-const express = require("express");
-const cors = require("cors");
-const app = express();
-const dotenv = require("dotenv");
-dotenv.config();
+bot.onText("/help", (msg) => {
+	const chatId = msg.chat.id;
+	bot.sendMessage(chatId, "Qanday yordam kerak?");
+});
 
-/** DB and REDIS */
-const connectDB = require("./config/db");
-const { connectRedis } = require("./config/redis");
-connectDB();
-connectRedis();
-/** MIDDLEWARE */
-
-app.use(cors());
-app.use(express.json());
-
-/** ROUTES */
-const userRouter = require("./routes/routes");
-app.use("/api", userRouter);
-
-/** SERVER */
-
-app.listen(process.env.PORT, () => {
-	console.log(`Server running on port ${process.env.PORT}`);
+bot.onText("/start", (msg) => {
+	const chatId = msg.chat.id;
+	bot.sendMessage(chatId, "Assalomu alaykum");
+});
+bot.on("message", (msg) => {
+	if (msg.text === "salom") {
+		const chatId = msg.chat.id;
+		bot.sendMessage(chatId, "Assalomu alaykum, botga hush kelibsiz");
+	}
+	if (msg.text === "hello") {
+		const chatId = msg.chat.id;
+		bot.sendMessage(chatId, "Welcome to my bot");
+	}
 });

@@ -1,5 +1,5 @@
 {
-	"name": "NODE JS",
+	"name": "node-js",
 	"version": "1.0.0",
 	"description": "Nodejs darsliklar",
 	"license": "MIT",
@@ -16,14 +16,24 @@
 	"dependencies": {
 		"bcrypt": "^6.0.0",
 		"cors": "^2.8.6",
-		"dotenv": "^17.3.1",
+		"dotenv": "^17.4.2",
 		"express": "^5.2.1",
 		"jsonwebtoken": "^9.0.3",
 		"mongoose": "^8.23.0",
 		"multer": "^2.1.1",
+		"node-telegram-bot-api": "^0.67.0",
 		"redis": "^5.11.0",
 		"socket.io": "^4.8.3",
 		"uui": "^1.0.7",
 		"uuid": "^8.3.2"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/odilov001/nodejs.git"
+	},
+	"keywords": [],
+	"bugs": {
+		"url": "https://github.com/odilov001/nodejs/issues"
+	},
+	"homepage": "https://github.com/odilov001/nodejs#readme"
 }
