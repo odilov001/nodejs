@@ -3,12 +3,12 @@ const path = require("path");
 
 const mainMenu = {
 	keyboard: [
-		[{ text: "📚 Kurslar" }, { text: "👨‍🏫 O'qituvchilar" }],
-		[{ text: "📅 Jadval" }, { text: "💰 Narxlar" }],
+		[{ text: "📚 Kurslar" }, { text: "👨‍🏫 O'qituvchilar" }, { text: "📅 Jadval" }, { text: "💰 Narxlar" }],
 		[{ text: "📞 Kontakt" }, { text: "ℹ️ Haqimizda" }],
 	],
 	resize_keyboard: true,
 	persistent: true,
+	// one_time_keyboard: true,
 };
 
 module.exports = (bot) => {
@@ -22,7 +22,7 @@ module.exports = (bot) => {
 			fs.createReadStream(imagePath),
 			{
 				caption:
-					`🎓 <b>Assalomu alaykum, ${firstName}!</b>\n\n` +
+					`🎓 <a href='kun.uz'>Assalomu alaykum, ${firstName}!</a>\n\n` +
 					`📚 <b>Ta'lim Markaziga Xush Kelibsiz!</b>\n\n` +
 					`Bu yerda siz:\n` +
 					`✅ Sifatli kurslarni topasiz\n` +
@@ -57,7 +57,7 @@ module.exports = (bot) => {
 					`2️⃣ <b>Backend (Node.js)</b> — 4 oy\n` +
 					`3️⃣ <b>UI/UX Design</b> — 2 oy\n` +
 					`4️⃣ <b>Python &amp; Data Science</b> — 5 oy\n\n` +
-					`📌 Batafsil ma'lumot uchun /contact ga murojaat qiling`,
+					`📌 Batafsil ma'lumot uchun @dev_odilov ga murojaat qiling`,
 				{
 					parse_mode: "HTML",
 					reply_markup: {
@@ -180,9 +180,9 @@ async function sendContact(bot, chatId) {
 		chatId,
 		`📞 <b>Bog'lanish Uchun</b>\n\n` +
 			`👤 <b>Mas'ul shaxs:</b> Admin\n` +
-			`📱 <b>Telefon:</b> +998 90 123 45 67\n` +
+			`📱 <b>Telefon:</b> +998 90 626 45 46\n` +
 			`💬 <b>Telegram:</b> @dev_odilov\n` +
-			`🌐 <b>Vebsayt:</b> www.example.uz\n\n` +
+			`🌐 <b>Vebsayt:</b> ajautodb.com\n\n` +
 			`🕐 <b>Ish vaqti:</b>\n` +
 			`Dushanba — Shanba: 09:00 — 18:00`,
 		{
