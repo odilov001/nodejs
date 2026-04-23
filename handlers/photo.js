@@ -1,11 +1,30 @@
+const fs = require("fs");
+const path = require("path");
+
 module.exports = (bot) => {
 	bot.on("message", async (msg) => {
 		const chatId = msg.chat.id;
 		const text = msg.text;
 
 		if (text === "/info") {
-			await bot.sendPhoto(chatId, "https://i.pinimg.com/280x280_RS/c0/bf/29/c0bf29cb53e21df37381f71b9d2b8054.jpg");
-			return bot.sendMessage(chatId, `Sizning telegram username bu ${msg.from?.username}, sizning ismingiz esa ${msg.from?.first_name} ${msg.from?.last_name}`);
+			const imagePath = path.join(__dirname, "../assets/photos/fox.jpeg");
+			await bot.sendPhoto(chatId, fs.createReadStream(imagePath));
+			return bot.sendMessage(chatId, `Sizning telegram username bu ${msg.from?.username}, sizning ismingiz esa ${msg.from?.first_name}`);
+		}
+
+		if (text === "video") {
+			const videoPath = path.join(__dirname, "../assets/videos/study.mp4");
+			return bot.sendVideo(chatId, fs.createReadStream(videoPath));
+		}
+
+		if (text === "rasm") {
+			const imagePath = path.join(__dirname, "../assets/photos/fox.jpeg");
+			return bot.sendPhoto(chatId, fs.createReadStream(imagePath));
+		}
+
+		if (text === "pdf") {
+			const pdfPath = path.join(__dirname, "../assets/doc/lesson.pdf");
+			return bot.sendDocument(chatId, fs.createReadStream(pdfPath));
 		}
 	});
 };
